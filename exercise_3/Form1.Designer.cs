@@ -134,7 +134,7 @@
             this.labelTiming.BackColor = System.Drawing.Color.White;
             this.labelTiming.Location = new System.Drawing.Point(414, 426);
             this.labelTiming.Name = "labelTiming";
-            this.labelTiming.Size = new System.Drawing.Size(68, 23);
+            this.labelTiming.Size = new System.Drawing.Size(94, 23);
             this.labelTiming.TabIndex = 11;
             // 
             // labelCounter
@@ -142,8 +142,9 @@
             this.labelCounter.BackColor = System.Drawing.Color.White;
             this.labelCounter.Location = new System.Drawing.Point(414, 452);
             this.labelCounter.Name = "labelCounter";
-            this.labelCounter.Size = new System.Drawing.Size(68, 23);
+            this.labelCounter.Size = new System.Drawing.Size(94, 23);
             this.labelCounter.TabIndex = 12;
+            this.labelCounter.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // Form1
             // 

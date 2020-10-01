@@ -17,7 +17,7 @@ namespace exercise_3
         private string myString;
         private List<int> myList = new List<int>();
         private int counter = 0;
-        Stopwatch myWatch = new Stopwatch();
+        Stopwatch myTimer = new Stopwatch();
 
         public Form1()
         {
@@ -26,19 +26,16 @@ namespace exercise_3
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            using (var streamReader = new StreamReader(@"C:\Users\boysa\Documents\Visual Studio 2012\Projects\exercise_3\stringFile.txt", Encoding.UTF8))
+            using (var streamReader = new StreamReader(@"C:\Users\boysa\Documents\Visual Studio 2012\Projects\exercise_3_17621736_SIT\stringFile.txt", Encoding.UTF8))
             {
                 myString = streamReader.ReadToEnd();
-            }
-
+            }  
             richTextBox1.Text = myString;
         }
 
         private void searchWord() 
         {
             counter = 0;
-
-            Regex reg = new Regex("[(){}!?:;\\t-=+*'\".,_&#^@]");
 
             if (searchBox.Text == string.Empty)
             {
@@ -47,12 +44,13 @@ namespace exercise_3
             }
             else
             {
-                myWatch.Start();
-
+                myTimer.Start();
+                
                 int s_start = richTextBox1.SelectionStart, startIndex = 0, index;
-
-                while ((index = richTextBox1.Text.ToLower().IndexOf(reg.Replace(searchBox.Text.ToLower()," "), startIndex)) != -1)
+        
+                while ((index = richTextBox1.Text.ToLower().IndexOf(searchBox.Text.ToLower(), startIndex)) != -1)
                 {
+                    
                     richTextBox1.Select(index, searchBox.TextLength);
                     richTextBox1.SelectionColor = Color.Red;
                     startIndex = index + searchBox.TextLength;
@@ -62,43 +60,42 @@ namespace exercise_3
                     counter++;
                 }
 
-                myWatch.Stop();
-                labelTiming.Text = myWatch.Elapsed.ToString();
+                myTimer.Stop();
+                labelTiming.Text = myTimer.Elapsed.ToString();
             }
-            
 
             foreach (var element in myList)
             {
                 textBoxPosition.Text += element.ToString() + System.Environment.NewLine;    
             }
-            labelCounter.Text = counter.ToString();
-            
+            labelCounter.Text = counter.ToString();     
         }
 
-        //private string clear(string setString)
-        //{
-        //    StringBuilder stringBuilder = new StringBuilder(setString);
-        //    stringBuilder.Replace("  ", " ");
-        //    stringBuilder.Replace(Environment.NewLine, " ");
-        //    stringBuilder.Replace("\\t", string.Empty);
-        //    stringBuilder.Replace("(", " ");
-        //    stringBuilder.Replace(")", " ");
-        //    stringBuilder.Replace(": ", " ");
-        //    stringBuilder.Replace(",", " ");
-        //    stringBuilder.Replace(";", " ");
-        //    stringBuilder.Replace(".", " ");
-        //    stringBuilder.Replace("-", " ");
-        //    stringBuilder.Replace("!", " ");
-        //    stringBuilder.Replace("?", " ");
-        //    stringBuilder.Replace("  ", " ");
-        //    return stringBuilder.ToString();
-        //}
+        private static string clear(string setString)
+        {
+            StringBuilder stringBuilder = new StringBuilder(setString);
+            stringBuilder.Replace("  ", " ");
+            stringBuilder.Replace(Environment.NewLine, " ");
+            stringBuilder.Replace("\\t", string.Empty);
+            stringBuilder.Replace("(", " ");
+            stringBuilder.Replace(")", " ");
+            stringBuilder.Replace(": ", " ");
+            stringBuilder.Replace(",", " ");
+            stringBuilder.Replace(";", " ");
+            stringBuilder.Replace(".", " ");
+            stringBuilder.Replace("-", " ");
+            stringBuilder.Replace("!", " ");
+            stringBuilder.Replace("?", " ");
+            stringBuilder.Replace("  ", " ");
+            return stringBuilder.ToString();
+        }
 
         private void clearWindow() 
         {
             labelTiming.Text = "";
             labelCounter.Text = "";
             textBoxPosition.Clear();
+            searchBox.Clear();
             richTextBox1.Text = myString;
             myList.Clear();  
         }
@@ -110,6 +107,8 @@ namespace exercise_3
 
         private void button2_search_Click(object sender, EventArgs e)
         {
+            richTextBox1.Text = Form1.clear(richTextBox1.Text);
+            searchBox.Text = Form1.clear(searchBox.Text);
             searchWord();
         }
 
